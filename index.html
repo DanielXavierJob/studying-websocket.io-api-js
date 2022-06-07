@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>
+        teste
+    </h1>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"
+        integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function generateRandomInteger(max) {
+            return Math.floor(Math.random() * max) + 1;
+        }
+        var auth = prompt("Enter Auth Token");
+        var restaurant = prompt("Enter Restaurant");
+        var socketIO = io("http://localhost:3000");
+        socketIO.emit("connected", { id: generateRandomInteger(99999), auth_token: auth, restaurant_id: restaurant });
+        socketIO.on("messageReceived", (data) => {
+            console.log(data);
+        });
+        function sendEvent(form) {
+            var message = prompt("Enter message");
+            socketIO.emit("sendEvent", {
+                "myID": userID,
+                "userID": "123",
+                "message": message
+            })
+        }
+    </script>
+</body>
+
+</html>
